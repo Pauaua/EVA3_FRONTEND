@@ -1,39 +1,50 @@
-import ServiceCard from "./ServiceCard";
+// src/components/ProductsSection.jsx
+import { useEffect, useState } from 'react';
+import { getProducts } from '../utils/api';
+import { Grid, Card, CardMedia, Typography, CardContent } from '@mui/material';
 
 const ProductsSection = () => {
-  const products = [
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Mantel Bordado Vintage",
-      description: "Mantel antiguo en perfecto estado, ideal para decoración.",
-      productName: "Mantel Bordado",
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Vajilla de Porcelana",
-      description: "Juego de vajilla años 60, coleccionable.",
-      productName: "Vajilla de Porcelana", // Agregado para mantener consistencia
-    },
-    {
-      image: "https://via.placeholder.com/300",
-      title: "Juego de Té Antiguo",
-      description: "Juego de té de cerámica, perfecto para coleccionistas.",
-      productName: "Vajilla de Porcelana", // Agregado para mantener consistencia
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getProducts()
+      .then(data => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Typography>Cargando productos...</Typography>;
+  if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap" }}>
-      {products.map((product, index) => (
-        <ServiceCard
-          key={index}
-          image={product.image}
-          title={product.title}
-          description={product.description}
-          productName={product.productName}
-        />
+    <Grid container spacing={3}>
+      {products.map((product) => (
+        <Grid item xs={12} sm={6} md={4} key={product.id}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.image_url}
+              alt={product.name}
+            />
+            <CardContent>
+              <Typography variant="h6">{product.name}</Typography>
+              <Typography>{product.description}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                Precio: ${product.price}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 };
 

@@ -1,66 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-  CardActions,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { getProducts } from '../utils/api';
+import { Grid, Card, CardMedia, Typography, CardContent } from '@mui/material';
 
-const ServiceCard = ({ image, title, description, productName }) => {
-  const navigate = useNavigate();
 
-  const handleContactClick = () => {
-    // Redirige al formulario de contacto con el producto prellenado
-    navigate("/contacto", { state: { producto: productName || title } });
-  };
-
+const ServiceCard = ()=> {
+  
   return (
-    <Card sx={{ maxWidth: 345, margin: 2, boxShadow: 3 }}>
-      {/* Imagen del producto */}
-      <CardMedia
-        component="img"
-        height="200"
-        image={image}
-        alt={title}
-        sx={{ objectFit: "cover" }}
-      />
-
-      {/* Título y descripción */}
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {description}
-        </Typography>
-      </CardContent>
-
-      {/* Botón "Contáctanos" */}
-      <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          variant="contained"
-          onClick={handleContactClick}
-          sx={{ marginLeft: "auto" }}
-        >
-          Contáctanos
-        </Button>
-      </CardActions>
-    </Card>
+     <Grid container spacing={3}>
+      {products.map((product) => (
+        <Grid item xs={12} sm={6} md={4} key={product.id}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.image_url}
+              alt={product.name}
+            />
+            <CardContent>
+              <Typography variant="h6">{product.name}</Typography>
+              <Typography>{product.description}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                Precio: ${product.price}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
   );
 };
 
-// Validación de props
-ServiceCard.propTypes = {
-  image: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  productName: PropTypes.string, 
-};
 
 export default ServiceCard;
