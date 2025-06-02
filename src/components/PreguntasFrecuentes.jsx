@@ -1,38 +1,55 @@
-// src/components/FaqSection.jsx
 import { useEffect, useState } from 'react';
-import { getFaqs } from '../utils/api';
+import { fetchFaqs } from '../utils/api';
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+const API_URL_FAQ = 'https://682d141c4fae18894754cf18.mockapi.io/preguntas';
+
 const PreguntasFrecuentesSection = () => {
-  const [faqs, setFaqs] = useState([]);
-  const [error, setError] = useState(null);
+    const [dataFaq, setDataFaq] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    getFaqs()
-      .then(data => setFaqs(data))
-      .catch(err => setError(err.message));
-  }, []);
+    useEffect(() => {
+            const fetchData = async () => {
+                try {
+                    const [faqsRes] = await Promise.all([
+                        fetch(API_URL_FAQ)
+                    ]);
+                    if (!faqsRes.ok) throw new Error('Error al obtener las preguntas');
+                    const faqs = await faqsRes.json();
+                    setDataFaq(faqs);
+                    setLoading(false);
+                } catch (err) {
+                    setError(err.message);
+                    setLoading(false);
+                }
+            };
+            fetchData();
+        }, []);
 
-  if (error) return <Typography color="error">{error}</Typography>;
+    if (loading) return <Typography>Cargando preguntas frecuentes...</Typography>;
+    if (error) return <Typography color="error">{error}</Typography>;
+    if(!dataFaq) return null
+    console.log(dataFaq);
 
-  return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        Preguntas Frecuentes
-      </Typography>
-      {faqs.map((faq) => (
-        <Accordion key={faq.id}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{faq.question}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{faq.answer}</Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            <Typography variant="h4" gutterBottom>
+                Preguntas Frecuentes
+            </Typography>
+            {dataFaq.map((faq, idx) => (
+                <Accordion key={idx}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>{faq.pregunta}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>{faq.respuesta}</Typography>
+                    </AccordionDetails>
+                </Accordion>
+            ))}
+        </div>
+    );
 };
 
 export default PreguntasFrecuentesSection;

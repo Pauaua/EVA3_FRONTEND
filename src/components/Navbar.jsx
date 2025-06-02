@@ -11,9 +11,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['¿Quiénes somos?', 'Productos', 'Preguntas Frecuentes'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
@@ -36,28 +35,42 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: 'white', color: '#6a1b9a' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
+          {/* Logo y texto desktop */}
+          <Box
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
-              mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              alignItems: 'center',
               textDecoration: 'none',
+              color: '#6a1b9a',
+              mr: 2,
             }}
           >
-            LOGO
-          </Typography>
+            <img
+              src="./logo.jpg"
+              alt="Logo"
+              style={{ height: 40, marginRight: 8 }}
+            />
+            <Typography
+              variant="h6"
+              noWrap
+              sx={{
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: '#6a1b9a',
+                textDecoration: 'none',
+              }}
+            >
+              Antiguedades Sthandier
+            </Typography>
+          </Box>
 
+          {/* Menú hamburguesa mobile */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -65,7 +78,7 @@ function Navbar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              sx={{ color: '#6a1b9a' }}
             >
               <MenuIcon />
             </IconButton>
@@ -87,36 +100,51 @@ function Navbar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <Typography sx={{ textAlign: 'center', color: '#6a1b9a' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
+
+          {/* Logo y texto mobile */}
+          <Box
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
-              mr: 2,
               display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
+              alignItems: 'center',
               textDecoration: 'none',
+              color: '#6a1b9a',
+              flexGrow: 1,
+              mr: 2,
             }}
           >
-            LOGO
-          </Typography>
+            <img
+              src="./logo.jpg"
+              alt="Logo"
+              style={{ height: 40, marginRight: 8 }}
+            />
+            <Typography
+              variant="h5"
+              noWrap
+              sx={{
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: '#6a1b9a',
+                textDecoration: 'none',
+              }}
+            >
+              Antiguedades Sthandier
+            </Typography>
+          </Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: '#6a1b9a', display: 'block' }}
               >
                 {page}
               </Button>
@@ -146,7 +174,7 @@ function Navbar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                  <Typography sx={{ textAlign: 'center', color: '#6a1b9a' }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

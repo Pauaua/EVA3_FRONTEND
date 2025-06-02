@@ -5,22 +5,30 @@ const cache = {};
 export const fetchWithAuth = async (endpoint) => {
   if (cache[endpoint]) return cache[endpoint];
 
-  const response = await fetch(`${API_BASE}${endpoint}`, {
-    headers: {
-      'Authorization': `Bearer ${TOKEN}`,
-      'Content-Type': 'application/json'
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      headers: {
+        'Authorization': `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Error al obtener datos: ${response.status} - ${errorText}`);
     }
-  });
-  
-  if (!response.ok) throw new Error('Error al obtener datos');
-  
-  const data = await response.json();
-  cache[endpoint] = data;
-  return data;
+
+    const data = await response.json();
+    console.log(`Respuesta de ${endpoint}:`, data); // <-- Para depuración
+    cache[endpoint] = data;
+    return data;
+  } catch (error) {
+    console.error(`Error en fetchWithAuth para ${endpoint}:`, error);
+    throw error;
+  }
 };
 
 // Endpoints específicos
-export const getProducts = () => fetchWithAuth('/products-services/');
-export const getAboutUs = () => fetchWithAuth('/about-us/');
-export const getFaqs = () => fetchWithAuth('/faq/');
-
+export const fetchProducts = () => fetchWithAuth('/products-services/');
+export const fetchAboutUs = () => fetchWithAuth('/about-us/');
+export const fetchFaqs = () => fetchWithAuth('/faq/');

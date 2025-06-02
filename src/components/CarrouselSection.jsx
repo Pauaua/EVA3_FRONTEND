@@ -2,12 +2,17 @@ import Carrousel from "./Carrousel";
 
 const carrouselItems = [
   {
-    image: "https://via.placeholder.com/800x500?text=Producto+1",
+    image: "./banner1.png",
     altText: "Mantel bordado vintage",
     title: "Colección Otoño 2023",
   },
   {
-    image: "https://via.placeholder.com/800x500?text=Producto+2",
+    image: "./banner2.png",
+    altText: "Vajilla de porcelana",
+    title: "Edición Limitada",
+  },
+  {
+    image: "./banner3.png",
     altText: "Vajilla de porcelana",
     title: "Edición Limitada",
   },
