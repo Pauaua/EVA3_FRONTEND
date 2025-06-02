@@ -26,7 +26,7 @@ function PopUp() {
         }
       }}
     >
-      <DialogTitle
+      <DialogTitle color="purple"
         sx={{
           textAlign: 'center',
           fontWeight: 'bold',
@@ -34,13 +34,13 @@ function PopUp() {
           pb: isMobile ? 1 : 2
         }}
       >
-        Pago Permiso de Circulación 2024
+        ¡ACCEDE YA A NUESTRA EDICIÓN LIMITADA!
       </DialogTitle>
       <DialogContent sx={{ textAlign: 'center', px: isMobile ? 1 : 3 }}>
         <Box
           component="img"
-          src="/assets/popup.jpg"
-          alt="Pago Permiso de Circulación"
+          src="./popup-image.png" 
+          alt="Edición limitada"
           sx={{
             width: '100%',
             maxHeight: isMobile ? 120 : 180,
@@ -56,24 +56,10 @@ function PopUp() {
             fontSize: isMobile ? '1rem' : '1.1rem'
           }}
         >
-          Ya puedes pagar tu permiso de circulación en línea o en la nueva oficina ubicada en José Joaquín Pérez 449, Cholchol.
+          ¡No te pierdas la oportunidad de adquirir piezas únicas y exclusivas de nuestra colección especial!
         </Typography>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'center', pb: isMobile ? 1 : 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          href="https://portalweb.insico.cl/Cholchol/Permisos/"
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            fontSize: isMobile ? '0.95rem' : '1.05rem',
-            px: isMobile ? 2 : 4,
-            py: isMobile ? 1 : 1.5
-          }}
-        >
-          Ir a pago en línea
-        </Button>
         <Button
           onClick={handleClose}
           color="secondary"

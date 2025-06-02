@@ -8,22 +8,22 @@ const carrouselItems = [
   },
   {
     image: "./banner2.png",
-    altText: "Vajilla de porcelana",
+    altText: "Sección productos destacados",
     title: "Edición Limitada",
   },
   {
     image: "./banner3.png",
-    altText: "Vajilla de porcelana",
+    altText: "Sección productos destacados",
     title: "Edición Limitada",
   },
   {
     image: "./banner4.png",
-    altText: "Vajilla de porcelana",
+    altText: "Sección productos destacados",
     title: "Edición Limitada",
   },
   {
     image: "./banner5.png",
-    altText: "Vajilla de porcelana",
+    altText: "Sección productos destacados",
     title: "Edición Limitada",
   },
 ];

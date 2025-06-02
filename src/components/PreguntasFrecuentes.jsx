@@ -3,48 +3,50 @@ import { fetchFaqs } from '../utils/api';
 import { Accordion, AccordionSummary, AccordionDetails, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const API_URL_FAQ = 'https://682d141c4fae18894754cf18.mockapi.io/preguntas';
-
+/**
+ * Muestra preguntas frecuentes desde la API en formato acordeón.
+ */
 const PreguntasFrecuentesSection = () => {
-    const [dataFaq, setDataFaq] = useState(null);
+    const [dataFaq, setDataFaq] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    const [faqsRes] = await Promise.all([
-                        fetch(API_URL_FAQ)
-                    ]);
-                    if (!faqsRes.ok) throw new Error('Error al obtener las preguntas');
-                    const faqs = await faqsRes.json();
-                    setDataFaq(faqs);
-                    setLoading(false);
-                } catch (err) {
-                    setError(err.message);
-                    setLoading(false);
+        fetchFaqs()
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setDataFaq(data);
+                } else if (Array.isArray(data.faqs)) {
+                    setDataFaq(data.faqs);
+                } else if (Array.isArray(data.preguntas)) {
+                    setDataFaq(data.preguntas);
+                } else {
+                    setDataFaq([]);
                 }
-            };
-            fetchData();
-        }, []);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err.message);
+                setLoading(false);
+            });
+    }, []);
 
     if (loading) return <Typography>Cargando preguntas frecuentes...</Typography>;
     if (error) return <Typography color="error">{error}</Typography>;
-    if(!dataFaq) return null
-    console.log(dataFaq);
+    if (!dataFaq.length) return <Typography>No hay preguntas frecuentes disponibles.</Typography>;
 
     return (
         <div>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h2" color="purple" gutterBottom>
                 Preguntas Frecuentes
             </Typography>
             {dataFaq.map((faq, idx) => (
                 <Accordion key={idx}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography>{faq.pregunta}</Typography>
+                        <Typography>{faq.titulo || faq.pregunta || faq.question}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography>{faq.respuesta}</Typography>
+                        <Typography>{faq.respuesta || faq.answer}</Typography>
                     </AccordionDetails>
                 </Accordion>
             ))}

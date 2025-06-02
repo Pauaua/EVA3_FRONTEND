@@ -4,7 +4,6 @@ import ProductsSection from '../components/ProductsSection'
 function ProductsPage() {
   return (
     <div>
-
         <ProductsSection/>
     </div>
   )

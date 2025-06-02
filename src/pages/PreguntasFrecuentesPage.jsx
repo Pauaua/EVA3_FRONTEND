@@ -1,8 +1,11 @@
 import React from 'react'
+import PreguntasFrecuentesSection from '../components/PreguntasFrecuentes'
 
 function PreguntasFrecuentesPage() {
   return (
-    <div>PreguntasFrecuentesPage</div>
+    <>
+    <PreguntasFrecuentesSection/>
+    </>
   )
 }
 

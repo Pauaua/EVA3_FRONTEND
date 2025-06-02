@@ -1,8 +1,11 @@
 import React from 'react'
+import QuienesSomosSection from '../components/QuienesSomosSection'
 
 function QuienesSomosPage() {
   return (
-    <div>QuienesSomosPage</div>
+    <>
+    <QuienesSomosSection/>
+    </>
   )
 }
 

@@ -11,13 +11,20 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['¿Quiénes somos?', 'Productos', 'Preguntas Frecuentes'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  { label: '¿Quiénes somos?', path: '/nosotros' },
+  { label: 'Productos', path: '/productos' },
+  { label: 'Preguntas Frecuentes', path: '/faq' },
+  { label: 'Contacto', path: '/contacto' }
+];
+const settings = ['Perfil', 'Cuenta', 'Panel', 'Cerrar sesión'];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,6 +39,11 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleNavigate = (path) => {
+    navigate(path);
+    handleCloseNavMenu();
   };
 
   return (
@@ -99,8 +111,8 @@ function Navbar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center', color: '#6a1b9a' }}>{page}</Typography>
+                <MenuItem key={page.label} onClick={() => handleNavigate(page.path)}>
+                  <Typography sx={{ textAlign: 'center', color: '#6a1b9a' }}>{page.label}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -142,11 +154,11 @@ function Navbar() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.label}
+                onClick={() => handleNavigate(page.path)}
                 sx={{ my: 2, color: '#6a1b9a', display: 'block' }}
               >
-                {page}
+                {page.label}
               </Button>
             ))}
           </Box>
