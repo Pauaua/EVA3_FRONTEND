@@ -16,6 +16,16 @@ const carrouselItems = [
     altText: "Vajilla de porcelana",
     title: "Edición Limitada",
   },
+  {
+    image: "./banner4.png",
+    altText: "Vajilla de porcelana",
+    title: "Edición Limitada",
+  },
+  {
+    image: "./banner5.png",
+    altText: "Vajilla de porcelana",
+    title: "Edición Limitada",
+  },
 ];
 
 function CarrouselSection() {

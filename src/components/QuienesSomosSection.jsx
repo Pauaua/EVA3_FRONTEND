@@ -1,38 +1,29 @@
-import React, {useEffect, useState} from 'react';
-
-const API_URL_ABOUTUS = 'https://www.clinicatecnologica.cl/ipss/antiguedadesSthandier/api/v1/about-us/';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from "@mui/material";
+import { fetchAboutUs } from '../utils/api';
 
-function QuienesSomosSection(){
+function QuienesSomosSection() {
     const [aboutText, setAboutText] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [response] = await Promise.all([
-                    fetch(API_URL_ABOUTUS)
-                ]);
-                if (!response.ok) throw new Error('Error al obtener la información');
-                const result = await response.json();
-                setAboutText(result.data || '');
+        fetchAboutUs()
+            .then(data => {
+                // Si la API devuelve un objeto, ajusta aquí según la estructura real
+                setAboutText(typeof data === 'string' ? data : data.descripcion || JSON.stringify(data));
                 setLoading(false);
-            } catch (err) {
+            })
+            .catch(err => {
                 setError(err.message);
                 setLoading(false);
-            }
-        };
-        fetchData();
+            });
     }, []);
 
-    if(loading) return <div>Cargando...</div>
-    if(error) return <div>Error: {error}</div>
-    
-    //print data
-    console.log(aboutText);
+    if (loading) return <div>Cargando...</div>;
+    if (error) return <div>Error: {error}</div>;
 
-    return(
+    return (
         <>
             <Box sx={{ padding: 2 }}>
                 <Typography variant="h2" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -44,8 +35,8 @@ function QuienesSomosSection(){
                     {aboutText || 'No hay descripción disponible.'}
                 </Typography>
             </Box>
-           
         </>
-    )
+    );
 }
+
 export default QuienesSomosSection;

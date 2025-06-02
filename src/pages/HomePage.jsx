@@ -8,8 +8,8 @@ function HomePage() {
   return (
     <>
     <CarrouselSection />
-    <QuienesSomosSection/>
     <ProductsSection/>
+    <QuienesSomosSection/>
     <PreguntasFrecuentesSection/> 
     </>
   )

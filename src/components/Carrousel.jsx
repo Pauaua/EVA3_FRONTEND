@@ -11,6 +11,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 const Carrousel = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -65,8 +66,14 @@ const Carrousel = ({ items }) => {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                transition: "transform 0.5s cubic-bezier(.4,2,.3,1)",
+                transform:
+                  hoveredIndex === index ? "scale(1.15)" : "scale(1)",
+                cursor: "pointer",
               }}
-              loading="lazy" // Optimización
+              loading="lazy"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
             />
             {/* Texto descriptivo (opcional) */}
             <Typography
